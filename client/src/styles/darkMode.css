@@ -1,0 +1,27 @@
+:root {
+  --background-color: #ffffff;
+  --text-color: #000000;
+  --card-background: #f5f5f5;
+  --border-color: #ddd;
+}
+
+.dark-mode {
+  --background-color: #1a1a1a;
+  --text-color: #ffffff;
+  --card-background: #2d2d2d;
+  --border-color: #404040;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Add these classes to your components */
+.card {
+  background-color: var(--card-background);
+  border-color: var(--border-color);
+}
+
+/* Add more dark mode styles as needed */ 

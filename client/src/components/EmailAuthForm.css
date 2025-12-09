@@ -1,0 +1,263 @@
+.auth-form-container {
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+.email-auth-form {
+  padding: 2.5rem;
+  background: var(--background-primary);
+  border-radius: 16px;
+  color: var(--text-color);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.form-header h3 {
+  font-size: var(--font-2xl);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.02em;
+}
+
+.form-header p {
+  color: var(--text-secondary);
+  font-size: var(--font-base);
+  line-height: var(--line-normal);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.form-group label span {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-secondary);
+  font-size: var(--font-sm);
+  font-weight: var(--font-medium);
+  letter-spacing: 0.01em;
+}
+
+.form-group input,
+.form-group .password-input-wrapper {
+  width: 100%;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  background: var(--background-color);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  color: var(--text-primary);
+  font-size: var(--font-base);
+  font-family: var(--font-primary);
+  transition: all 0.2s ease;
+}
+
+.form-group input::placeholder {
+  color: var(--text-secondary);
+}
+
+.form-group input:hover {
+  border-color: #4a90e2;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px var(--primary-transparent);
+  background: var(--background-primary);
+}
+
+.error-message {
+  color: #ff4d4f;
+  font-size: var(--font-sm);
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 77, 79, 0.1);
+  border-radius: 8px;
+  border-left: 3px solid #ff4d4f;
+}
+
+.success-message {
+  color: #52c41a;
+  font-size: var(--font-sm);
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  background: rgba(82, 196, 26, 0.1);
+  border-radius: 8px;
+  border-left: 3px solid #52c41a;
+}
+
+.forgot-password {
+  text-align: right;
+  margin: -0.5rem 0 1.5rem;
+}
+
+.forgot-password button {
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  font-size: var(--font-sm);
+  font-family: var(--font-primary);
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.2s ease;
+}
+
+.forgot-password button:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.submit-btn,
+.cancel-btn {
+  padding: 0.875rem;
+  border-radius: 10px;
+  font-weight: var(--font-semibold);
+  font-size: var(--font-base);
+  font-family: var(--font-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.01em;
+}
+
+.submit-btn {
+  background: var(--primary-color);
+  color: var(--text-on-primary);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--primary-dark);
+}
+
+.submit-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(74, 144, 226, 0.3);
+  background: var(--primary-dark);
+  border-color: var(--primary-darker);
+}
+
+.submit-btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(74, 144, 226, 0.2);
+}
+
+.submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  background: #4a90e2;
+}
+
+.cancel-btn {
+  background: var(--background-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(4px);
+}
+
+.cancel-btn:hover {
+  background: var(--background-hover);
+  border-color: var(--border-color);
+}
+
+.loading-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 0.7s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .email-auth-form {
+    padding: 1.5rem;
+  }
+
+  .form-header h3 {
+    font-size: 1.5rem;
+  }
+
+  .form-header p {
+    font-size: 0.95rem;
+  }
+
+  .form-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .submit-btn {
+    order: -1;
+  }
+}
+
+/* Add page container styles */
+.page-container {
+  min-height: 100vh;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper input {
+  padding-right: 40px; /* Make room for the toggle button */
+  width: 100%;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.password-toggle:hover {
+  color: var(--text-primary);
+}
+
+.password-toggle i {
+  font-size: 1.1rem;
+}
+
+/* Add Font Awesome icons */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css'); 

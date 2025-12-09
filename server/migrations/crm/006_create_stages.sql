@@ -1,0 +1,2 @@
+-- Stages table migration
+-- This file will contain the SQL to create the stages table

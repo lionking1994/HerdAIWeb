@@ -1,0 +1,11 @@
+{
+  "watch": ["server.js", "routes/", "controllers/", "models/", "config/"],
+  "ext": "js,json",
+  "ignore": ["node_modules/", "*.test.js"],
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "events": {
+    "restart": "echo '\n⚡️ Server restarting...'"
+  }
+} 

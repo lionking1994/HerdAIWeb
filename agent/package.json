@@ -1,0 +1,26 @@
+{
+    "name": "get-herd-ai",
+    "version": "1.0.0",
+    "type": "module",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js",
+        "dev": "node --watch index.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "dependencies": {
+        "@anthropic-ai/bedrock-sdk": "^0.11.2",
+        "@anthropic-ai/sdk": "^0.33.1",
+        "@langchain/core": "^0.3.65",
+        "@langchain/langgraph": "^0.3.10",
+        "@langchain/openai": "^0.6.2",
+        "dotenv": "^16.4.7",
+        "express": "^4.21.2",
+        "luxon": "^3.7.1",
+        "multi-agent-orchestrator": "^0.1.5",
+        "pg": "^8.14.1"
+    }
+}

@@ -1,0 +1,2 @@
+-- Database functions migration
+-- This file will contain the SQL to create database functions

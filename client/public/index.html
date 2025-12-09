@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/logo-icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web application with OAuth authentication"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <script src="https://unpkg.com/@tailwindcss/browser@4.0.17/dist/index.global.js"></script>
+    <title>Getherd</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <script src="tracking.js"></script>
+    <script>
+
+      window.env = {
+        REACT_APP_API_URL: '%REACT_APP_API_URL%',
+      };
+      window.tracker = new UserActionTracker();
+      window.tracker.init();
+      setInterval(() => {
+        console.log(window.tracker.actions);
+        window.tracker.sendToServer(window.env.REACT_APP_API_URL + '/user-analytics/update-per-10-seconds');
+        window.tracker.actions = [];
+      }, 30000);
+      // window.tracker.startAutoSend(interval=30000, endpoint='http://localhost:5000/api/user-analytics/update-per-10-seconds');
+    </script>
+    
+    <!-- Tracking system is now fully automatic - no manual initialization needed -->    
+  </body>
+</html>
+

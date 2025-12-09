@@ -1,0 +1,2 @@
+-- Contacts table migration
+-- This file will contain the SQL to create the contacts table

@@ -1,0 +1,491 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom scrollbar styles for CrmPaginationTable */
+.crm-table-scroll::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.crm-table-scroll::-webkit-scrollbar-track {
+  background: #f7fafc;
+  border-radius: 4px;
+}
+
+.crm-table-scroll::-webkit-scrollbar-thumb {
+  background: #cbd5e0;
+  border-radius: 4px;
+}
+
+.crm-table-scroll::-webkit-scrollbar-thumb:hover {
+  background: #a0aec0;
+}
+
+/* Firefox scrollbar */
+.crm-table-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e0 #f7fafc;
+}
+
+/* Prevent whole-page scroll and ensure proper height constraints */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* React Flow Styles */
+.react-flow__node {
+  cursor: pointer;
+}
+
+.react-flow__node:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.react-flow__handle {
+  width: 8px;
+  height: 8px;
+  border: 2px solid white;
+  border-radius: 50%;
+}
+
+.react-flow__handle:hover {
+  background-color: #3b82f6;
+}
+
+.react-flow__edge-path {
+  stroke: #94a3b8;
+  stroke-width: 2;
+}
+
+.react-flow__edge-path:hover {
+  stroke: #3b82f6;
+  stroke-width: 3;
+}
+
+.react-flow__controls {
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.react-flow__controls button {
+  border-radius: 4px;
+  margin: 2px;
+}
+
+/* Fix for React Flow zoom issues */
+.react-flow__viewport {
+  transform-origin: 0 0;
+}
+
+.react-flow__renderer {
+  position: relative;
+}
+
+.react-flow__pane {
+  cursor: grab;
+  touch-action: pan-x pan-y;
+}
+
+.react-flow__pane:active {
+  cursor: grabbing;
+}
+
+/* iPad specific React Flow improvements */
+@media (hover: none) and (pointer: coarse) {
+  .react-flow__pane {
+    touch-action: pan-x pan-y;
+  }
+  
+  .react-flow__node {
+    touch-action: manipulation;
+  }
+  
+  .react-flow__handle {
+    touch-action: manipulation;
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.floating-icon {
+  animation: float 3s ease-in-out infinite;
+  opacity: 0.1;
+}
+
+.glass-effect {
+  @apply bg-white/80 backdrop-blur-lg;
+}
+
+.btn-primary {
+  @apply px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 font-semibold w-full flex items-center justify-center gap-2;
+}
+
+.input-field {
+  @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200;
+}
+
+.auth-container {
+  @apply min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4;
+}
+
+.auth-card {
+  @apply w-full max-w-md p-8 glass-effect rounded-2xl shadow-xl space-y-6;
+}
+
+.auth-title {
+  @apply text-3xl font-bold text-center text-gray-800 mb-2;
+}
+
+.auth-subtitle {
+  @apply text-center text-gray-600 mb-8;
+}
+
+.form-group {
+  @apply space-y-2;
+}
+
+.form-label {
+  @apply block text-sm font-medium text-gray-700;
+}
+
+.auth-link {
+  @apply text-blue-600 hover:text-blue-800 font-medium transition-colors duration-200;
+}
+
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+
+.Toastify__close-button>svg {
+  width: 30px;
+  height: 30px;
+}
+
+/* Step type elements styling */
+.step-type-element {
+  width: 100%;
+  min-height: 80px;
+  border: 2px dashed #d1d5db;
+  border-radius: 8px;
+  padding: 16px;
+  transition: all 0.2s ease;
+  cursor: grab;
+  user-select: none;
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.step-type-element:hover {
+  border-color: #9ca3af;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.step-type-element:active {
+  cursor: grabbing;
+  transform: scale(0.98);
+}
+
+/* Mobile drag feedback styling */
+.mobile-drag-feedback {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transform: scale(0.95);
+  opacity: 0.9;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(4px);
+  border-radius: 8px;
+  background: white;
+}
+
+/* iPad specific touch improvements */
+@media (hover: none) and (pointer: coarse) {
+  .step-type-element {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  .step-type-element:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+  }
+}
+
+/* Prevent text selection during drag */
+.no-select {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Touch feedback for better UX */
+.touch-feedback {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Workflow builder mobile optimizations */
+.workflow-builder-mobile {
+  touch-action: pan-x pan-y;
+  -webkit-overflow-scrolling: touch;
+}
+
+.sidebar {
+  touch-action: pan-x pan-y;
+  -webkit-overflow-scrolling: touch;
+}
+
+.canvas {
+  touch-action: pan-x pan-y;
+  -webkit-overflow-scrolling: touch;
+}
+
+.config-panel {
+  touch-action: pan-x pan-y;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Prevent text selection during drag operations */
+.step-type-element.dragging {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Improve touch feedback on iPad */
+@media (hover: none) and (pointer: coarse) {
+  .step-type-element {
+    transition: transform 0.1s ease, opacity 0.1s ease;
+  }
+  
+  .step-type-element:active {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  
+  /* Prevent zoom on double tap */
+  .workflow-builder-mobile {
+    touch-action: manipulation;
+  }
+}
+
+/* Enhanced Mobile Responsive Styles */
+@media (max-width: 768px) {
+  /* Mobile-specific workflow builder styles */
+  .workflow-builder-mobile {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* Mobile panel transitions */
+  .sidebar, .config-panel {
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Mobile header optimizations */
+  .workflow-builder-mobile .bg-white.border-b {
+    padding: 0.75rem 1rem;
+  }
+  
+  /* Mobile input optimizations */
+  .workflow-builder-mobile input,
+  .workflow-builder-mobile textarea,
+  .workflow-builder-mobile select {
+    font-size: 16px; /* Prevents zoom on iOS */
+    padding: 0.75rem;
+  }
+  
+  /* Mobile button optimizations */
+  .workflow-builder-mobile button {
+    min-height: 44px; /* iOS touch target minimum */
+    min-width: 44px;
+  }
+  
+  /* Mobile card optimizations */
+  .workflow-builder-mobile .card {
+    margin-bottom: 1rem;
+  }
+  
+  /* Mobile step type grid */
+  .step-type-element {
+    min-height: 70px;
+    padding: 12px;
+  }
+  
+  /* Mobile quick add buttons */
+  .workflow-builder-mobile .grid-cols-2 button {
+    padding: 0.5rem;
+    font-size: 0.875rem;
+  }
+  
+  /* Mobile canvas area */
+  .workflow-builder-mobile .canvas {
+    min-height: calc(100vh - 120px);
+  }
+  
+  /* Mobile overlay improvements */
+  .workflow-builder-mobile .bg-black.bg-opacity-50 {
+    backdrop-filter: blur(2px);
+  }
+}
+
+/* Tablet optimizations */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .workflow-builder-mobile .sidebar {
+    width: 320px;
+  }
+  
+  .workflow-builder-mobile .config-panel {
+    width: 360px;
+  }
+  
+  .step-type-element {
+    min-height: 75px;
+  }
+}
+
+/* Large screen optimizations */
+@media (min-width: 1025px) {
+  .workflow-builder-mobile .sidebar {
+    width: 320px;
+  }
+  
+  .workflow-builder-mobile .config-panel {
+    width: 384px;
+  }
+}
+
+/* Touch device specific improvements */
+@media (hover: none) and (pointer: coarse) {
+  /* Larger touch targets */
+  .step-type-element {
+    min-height: 80px;
+    padding: 16px;
+  }
+  
+  /* Better touch feedback */
+  .step-type-element:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+  }
+  
+  /* Prevent text selection */
+  .workflow-builder-mobile * {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* Allow text selection in inputs */
+  .workflow-builder-mobile input,
+  .workflow-builder-mobile textarea {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+  }
+}
+
+/* High DPI display optimizations */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .step-type-element {
+    border-width: 1px;
+  }
+  
+  .workflow-builder-mobile .border {
+    border-width: 0.5px;
+  }
+}
+
+/* Dark mode support for mobile */
+@media (prefers-color-scheme: dark) {
+  .workflow-builder-mobile {
+    background-color: #1f2937;
+  }
+  
+  .workflow-builder-mobile .bg-white {
+    background-color: #374151;
+    color: #f9fafb;
+  }
+  
+  .workflow-builder-mobile .border-gray-200 {
+    border-color: #4b5563;
+  }
+}
+
+/* Footer positioning fixes */
+.crm-page-container {
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Prevent page-level scroll */
+}
+
+.crm-page-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.crm-page-spacer {
+  flex: 1;
+  min-height: 2rem;
+}
+
+/* Dashboard specific scroll containment */
+.crm-page-container .space-y-6.max-h-full {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 4px; /* Space for scrollbar */
+}

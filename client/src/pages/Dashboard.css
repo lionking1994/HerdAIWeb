@@ -1,0 +1,465 @@
+.dashboard-container {
+  min-height: 100vh;
+  background-color: rgb(249, 250, 251);
+    color: rgb(17, 24, 39);
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-content {
+  overflow: auto;
+    flex-grow: 1;
+  }
+  
+  .dashboard-inner {
+    max-width: 72rem;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Enhanced Search Styles */
+.search-container {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto 2rem;
+  z-index: 50;
+}
+
+.search-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.search-input {
+  width: 100%;
+  padding: 1rem 1rem 1rem 3rem;
+  border-radius: 1rem;
+  border: 2px solid rgb(229, 231, 235);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+    background-color: white;
+}
+
+.search-input:focus {
+  border-color: rgb(59, 130, 246);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  outline: none;
+}
+
+.search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgb(156, 163, 175);
+}
+
+.search-spinner {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Search Results Styles */
+.search-results-container {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  right: 0;
+  background-color: transparent;
+  border-radius: 1rem;
+  max-height: 80vh;
+  overflow-y: auto;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.search-category {
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgb(229, 231, 235);
+  overflow: hidden;
+}
+
+.category-header {
+  padding: 1rem;
+  background-color: rgb(249, 250, 251);
+  font-weight: 600;
+  color: rgb(17, 24, 39);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+    border-bottom: 1px solid rgb(229, 231, 235);
+}
+
+.category-icon {
+  margin-right: 0.5rem;
+  color: rgb(59, 130, 246);
+}
+
+.category-count {
+  background-color: rgb(59, 130, 246);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+}
+
+/* Search Result Items */
+.search-result-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid rgb(243, 244, 246);
+  cursor: pointer;
+}
+
+.search-result-item:last-child {
+  border-bottom: none;
+}
+
+.search-result-item:hover {
+  background-color: rgb(243, 244, 246);
+}
+
+.result-avatar {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 999px;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+
+.result-avatar-fallback {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 999px;
+  margin-right: 1rem;
+  background-color: rgb(59, 130, 246);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.result-content {
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.result-title {
+  font-weight: 600;
+  color: rgb(17, 24, 39);
+  margin-bottom: 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.result-description {
+  color: rgb(107, 114, 128);
+  font-size: 0.875rem;
+  display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.result-metadata {
+  margin-left: auto;
+  padding-left: 1rem;
+  font-size: 0.875rem;
+  color: rgb(107, 114, 128);
+  flex-shrink: 0;
+}
+
+/* Empty State */
+.search-empty-state {
+  padding: 2rem;
+  text-align: center;
+  color: rgb(107, 114, 128);
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.stat-card {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgb(229, 231, 235);
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.stat-card:hover {
+  transform: scale(1.01);
+}
+
+.stat-title {
+  color: rgb(55, 65, 81);
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.stat-value {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: rgb(37, 99, 235);
+}
+
+/* Meetings Section */
+.meetings-section {
+  margin-bottom: 3rem;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  color: rgb(31, 41, 55);
+  margin-bottom: 1.25rem;
+  font-weight: 700;
+}
+
+.meetings-grid {
+  display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 2rem;
+}
+
+.meeting-card {
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgb(229, 231, 235);
+  transition: transform 0.2s;
+}
+
+.meeting-card:hover {
+  transform: scale(1.01);
+}
+
+.platform-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: rgb(75, 85, 99);
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.platform-icon {
+  font-size: 1.5rem;
+}
+
+.meeting-title {
+  font-size: 1.25rem;
+  color: rgb(37, 99, 235);
+  margin-bottom: 0.5rem;
+}
+
+.meeting-title:hover {
+  text-decoration: underline;
+}
+
+.meeting-time,
+.meeting-duration {
+  color: rgb(75, 85, 99);
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+}
+
+.participants-list {
+  margin-bottom: 1.5rem;
+}
+
+.participant-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  padding: 0.5rem;
+  background-color: rgb(243, 244, 246);
+  border-radius: 0.5rem;
+  border: 1px solid rgb(209, 213, 219);
+  }
+  
+                .participant-avatar {
+                  width: 3rem;
+                  height: 3rem;
+                  border-radius: 9999px;
+                  border: 2px solid rgb(59, 130, 246);
+}
+
+.participant-initial {
+  width: 3rem;
+  height: 3rem;
+  background-color: rgb(37, 99, 235);
+  color: white;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 1.125rem;
+}
+
+.participant-name {
+  color: rgb(31, 41, 55);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.remaining-participants {
+  color: rgb(75, 85, 99);
+}
+
+.remaining-participants span {
+  font-weight: 600;
+}
+
+/* Scroll to top button */
+.scroll-button {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  background-color: rgb(37, 99, 235);
+  color: white;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.scroll-button:hover {
+  background-color: rgb(29, 78, 216);
+}
+
+/* Responsive Design */
+@media (min-width: 640px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (min-width: 1024px) {
+  .stats-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+                                to {
+                                  transform: rotate(360deg);
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .dashboard-container {
+    background-color: rgb(17, 24, 39);
+      color: rgb(243, 244, 246);
+  }
+
+                                .stat-card,
+                                .meeting-card,
+                                .search-results {
+                                  background-color: rgb(31, 41, 55);
+                                  border-color: rgb(75, 85, 99);
+  }
+
+                                .stat-title {
+                                  color: rgb(209, 213, 219);
+  }
+
+    .meeting-time,
+    .meeting-duration,
+    .platform-info {
+      color: rgb(156, 163, 175);
+  }
+
+                                .participant-item {
+                                  background-color: rgb(17, 24, 39);
+                                  border-color: rgb(75, 85, 99);
+                                }
+                                .participant-name {
+                                  color: rgb(229, 231, 235);
+                                }
+                                }
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  .search-input {
+    background-color: rgb(31, 41, 55);
+    border-color: rgb(75, 85, 99);
+    color: white;
+  }
+
+                .search-results-container {
+                  background-color: rgb(31, 41, 55);
+                  border-color: rgb(75, 85, 99);
+  }
+
+                .category-header {
+                  background-color: rgb(17, 24, 39);
+                  color: white;
+  }
+
+                .search-result-item {
+                  border-color: rgb(55, 65, 81);
+  }
+
+                .search-result-item:hover {
+                  background-color: rgb(55, 65, 81);
+                }
+
+                .result-title {
+                  color: white;
+        
+                  .result-description,
+                  .result-metadata {
+                    color: rgb(156, 163, 175);
+                  }
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .search-category {
+    background-color: rgb(31, 41, 55);
+    border-color: rgb(75, 85, 99);
+  }
+
+  .category-header {
+    background-color: rgb(17, 24, 39);
+    color: white;
+    border-color: rgb(75, 85, 99);
+    }
+
+    .search-result-item {
+      border-color: rgb(55, 65, 81);
+    }
+.search-result-item:hover {
+  background-color: rgb(55, 65, 81);
+}
+}

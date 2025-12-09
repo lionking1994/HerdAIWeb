@@ -1,0 +1,83 @@
+
+.modal.show {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.form-input-wrapper {
+  position: relative;
+}
+
+
+.assignee-search-container {
+  position: relative;
+}
+
+.assignee-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+.assignee-option {
+  padding: 8px 12px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.assignee-option:hover {
+  background-color: #f5f5f5;
+}
+
+.assignee-email {
+  color: #666;
+  font-size: 0.9em;
+}
+
+.assignee-badge {
+  display: inline-flex;
+  align-items: center;
+  background-color: #e9ecef;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-top: 8px;
+}
+
+.remove-assignee {
+  background: none;
+  border: none;
+  margin-left: 8px;
+  cursor: pointer;
+  color: #666;
+}
+
+.loading-indicator {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 1s linear infinite;
+  margin-right: 8px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+} 
+.assignee-search {
+    width: 300px;
+      padding: 10px 6px;
+}

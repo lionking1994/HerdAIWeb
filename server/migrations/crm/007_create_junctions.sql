@@ -1,0 +1,2 @@
+-- Junction tables migration
+-- This file will contain the SQL to create junction tables

@@ -1,0 +1,80 @@
+.meeting-platform-check-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.meeting-platform-check-modal {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  width: 90%;
+  max-width: 450px;
+  position: relative;
+  padding: 24px;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.meeting-platform-check-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #666;
+}
+
+.meeting-platform-check-close:hover {
+  color: #333;
+}
+
+.meeting-platform-check-content {
+  text-align: center;
+}
+
+.meeting-platform-check-content h3 {
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+.meeting-platform-check-content p {
+  margin-bottom: 24px;
+  color: #666;
+  font-size: 1rem;
+}
+
+.meeting-platform-check-connect-btn {
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.meeting-platform-check-connect-btn:hover {
+  background-color: #4338ca;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

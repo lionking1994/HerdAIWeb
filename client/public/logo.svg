@@ -1,0 +1,19 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Elephant Circle Logo -->
+  <circle cx="100" cy="100" r="95" stroke="#4A90E2" stroke-width="8" fill="transparent"/>
+  <path d="M140 70 
+           C 160 80, 165 110, 155 140
+           C 150 155, 140 165, 125 170
+           C 105 177, 85 175, 70 165
+           C 55 155, 45 140, 45 120
+           C 45 100, 55 85, 70 75
+           C 85 65, 105 65, 120 70
+           L 125 60
+           C 130 55, 135 55, 140 60
+           Z" 
+        fill="none" 
+        stroke="#4A90E2" 
+        stroke-width="8"
+        stroke-linejoin="round"
+        stroke-linecap="round"/>
+</svg> 

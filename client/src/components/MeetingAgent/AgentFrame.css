@@ -1,0 +1,162 @@
+@keyframes slowBlink {
+  0% { opacity: 1; }
+  25% { opacity: 1; }
+  50% { opacity: 0.3; }
+  75% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Daily Reminder Animations */
+@keyframes slideInFromTop {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.6);
+  }
+}
+
+.daily-reminder-enter {
+  animation: slideInFromTop 0.6s ease-out;
+}
+
+.daily-reminder-item {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+.daily-reminder-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+.daily-reminder-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.daily-reminder-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  background-size: 200px 100%;
+  animation: shimmer 2s infinite;
+}
+
+.status-dot {
+  animation: slowBlink 3s ease-in-out infinite, pulse 3s ease-in-out infinite;
+    transform-origin: center;
+}
+
+.overflow-x-auto {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+table {
+  border-spacing: 0;
+  white-space: nowrap;
+  margin-bottom: 1rem;
+}
+
+th,
+td {
+  border: 1px solid #e5e7eb;
+  white-space: normal;
+  word-wrap: break-word;
+  max-width: 300px;
+  /* Adjust based on your needs */
+}
+
+td {
+  background: white;
+}
+@keyframes slowBlink {
+  0% {
+    opacity: 1;
+  }
+
+  25% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+
+  75% {
+    opacity: 0.3;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.big-status-dot {
+  animation: slowBlink 3s ease-in-out infinite, pulse 3s ease-in-out infinite;
+  transform-origin: center;
+}

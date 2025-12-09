@@ -1,0 +1,13 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"          # Location of package.json
+    schedule:
+      interval: "weekly"    # Check for updates weekly. Valid values: "daily", "weekly", "monthly"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "deps"
+    ignore:
+      - dependency-name: "express"
+        versions:
+          - "4.x.x"         # Example: ignore certain updates (remove if not needed)

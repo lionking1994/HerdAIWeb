@@ -1,0 +1,263 @@
+.meeting-list-container {
+  padding: 20px;
+  min-height: 100vh;
+  width: 80%;
+}
+
+.meeting-list-container.dark {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+.meeting-list-container.light {
+  background-color: #ffffff;
+  color: #333333;
+}
+
+.meeting-list-header {
+  padding: 1.5rem;
+  background: var(--surface-color);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+}
+
+.header-controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.tab-container {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.tab-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  background: var(--background-color);
+  color: var(--text-color);
+}
+
+.tab-button:hover {
+  background: var(--hover-color);
+}
+
+.tab-button.active {
+  background: var(--primary-color);
+  color: white;
+}
+
+.tab-icon {
+  font-size: 1.1rem;
+}
+
+.search-container {
+  position: relative;
+  margin: 0 auto;
+  max-width: 500px;
+  width: 100%;
+}
+
+.search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+}
+
+.search-input {
+  padding: 0.75rem 1rem 0.75rem 2.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 0.95rem;
+  background: var(--input-background);
+  color: var(--text-color);
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px var(--primary-color-light);
+}
+
+.meetings-table-container {
+  margin: 0 10px;
+  overflow-x: auto;
+}
+
+.meetings-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.meetings-table th,
+.meetings-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.dark .meetings-table th,
+.dark .meetings-table td {
+  border-color: #444;
+}
+
+.meeting-row {
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dark .meeting-row:hover {
+  background-color: #333;
+}
+
+.light .meeting-row:hover {
+  background-color: #f5f5f5;
+}
+
+.summary-cell {
+  max-width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Mobile Responsive Design */
+@media (max-width: 768px) {
+  .header-controls {
+    flex-direction: column;
+  }
+
+  .tab-container {
+    width: 100%;
+  }
+
+  .tab-button {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .search-container {
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  .meetings-table th,
+  .meetings-table td {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  .summary-cell {
+    max-width: 150px;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .search-container {
+    width: 100%;
+    margin: 10px 0;
+  }
+  
+  .search-input {
+    width: 100%;
+  }
+} 
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper input {
+  padding-right: 40px; /* Make room for the toggle button */
+  width: 100%;
+}
+
+/* Meeting card styles for list view */
+.meeting-card {
+  border-bottom: 1px solid #e5e7eb;
+  padding: 1rem;
+  transition: all 0.2s ease;
+}
+
+.meeting-card:hover {
+  background-color: #f9fafb;
+}
+
+.meeting-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.meeting-card-title {
+  font-weight: 600;
+  font-size: 1.125rem;
+  color: #111827;
+}
+
+.meeting-card-platform {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.meeting-card-summary {
+  color: #4b5563;
+  margin-bottom: 0.75rem;
+}
+
+.meeting-card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.meeting-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #f3f4f6;
+}
+
+.meeting-card-tasks {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.meeting-card-button {
+  background-color: #3b82f6;
+  color: white;
+  font-size: 0.875rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.375rem;
+  transition: background-color 0.2s;
+}
+
+.meeting-card-button:hover {
+  background-color: #2563eb;
+}

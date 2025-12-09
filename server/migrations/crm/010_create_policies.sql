@@ -1,0 +1,2 @@
+-- RLS policies migration
+-- This file will contain the SQL to create RLS policies

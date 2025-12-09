@@ -1,0 +1,2 @@
+-- Enable RLS migration
+-- This file will contain the SQL to enable Row Level Security

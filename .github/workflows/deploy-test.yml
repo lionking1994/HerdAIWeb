@@ -1,0 +1,240 @@
+# name: Deploy to Test (test.getherd.ai)
+
+# on:
+#   push:
+#     branches:
+#       - Test
+
+# jobs:
+#   deploy-test:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#     - name: SSH into EC2 and Deploy
+#       uses: appleboy/ssh-action@v1.0.0
+#       with:
+#         host: ${{ secrets.TEST_HOST }}
+#         username: ${{ secrets.DEPLOY_USER }}
+#         key: ${{ secrets.SSH_PRIVATE_KEY }}
+#         script: |
+#           cd ~/HerdAIWeb1
+
+#           # Pull latest changes from Test
+#           git stash || true
+#           git fetch origin
+#           git checkout Test
+#           git reset --hard origin/Test
+#           git clean -fd
+
+#           # Copy .env files from herdAI-configs to the respective projects
+#           cp ~/herdAI-configs/client.env ~/HerdAIWeb1/client/.env
+#           cp ~/herdAI-configs/admin.env ~/HerdAIWeb1/admin/.env
+#           cp ~/herdAI-configs/server.env ~/HerdAIWeb1/server/.env
+
+#           # Install & Build Client
+#           cd client
+#           echo "REACT_APP_API_URL=https://${{ secrets.TEST_HOST }}/api" > .env
+#           npm install --force
+#           npm run build
+#           cd ..
+          
+
+#           # Install & Build Admin
+#           cd admin
+#           echo "VITE_API_BASE_URL=https://${{ secrets.TEST_HOST }}/api" > .env
+#           npm install --force
+#           npm run build
+#           cd ..
+
+#           # Clean and deploy frontend
+          # sudo rm -rf /var/www/html/*
+          # sudo rm -rf /var/www/html/adminTest
+          # sudo mkdir -p /var/www/html/admin
+          # sudo cp -r client/build/. /var/www/html
+          # sudo cp -r admin/dist/. /var/www/html/admin
+
+#           # Setup server
+#           cp ~/herdAI-configs/server.env ./server/.env
+#           cd server
+#           npm install
+#           pm2 startOrReload ecosystem.config.js --env development
+#           pm2 save
+
+name: Deploy to Test (test.getherd.ai)
+
+on:
+  push:
+    branches:
+      - Test
+
+jobs:
+  deploy-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: SSH into EC2 and Deploy with Rollback
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.TEST_HOST }}
+        username: ${{ secrets.DEPLOY_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+
+          # TIMESTAMP=$(date +'%Y%m%d%H%M%S')
+          # BACKUP_DIR="/var/www/backup_$TIMESTAMP"
+
+          # echo "Navigating to project directory..."
+          # cd ~/HerdAIWeb1
+
+          # echo "Stashing and pulling latest changes..."
+          # git stash || true
+          # git fetch origin
+          # git checkout Test
+          # git reset --hard origin/Test
+          # git clean -fd
+
+          # echo "Copying .env files..."
+          # cp ~/herdAI-configs/client.env ./client/.env
+          # cp ~/herdAI-configs/admin.env ./admin/.env
+          # cp ~/herdAI-configs/server.env ./server/.env
+
+          # echo "Backing up current deployment..."
+          # sudo mkdir -p "$BACKUP_DIR"
+          # sudo cp -r /var/www/html "$BACKUP_DIR/html"
+          # sudo cp -r /var/www/html/admin "$BACKUP_DIR/admin"
+
+          # # DEPLOY LOGIC INSIDE TRY BLOCK
+          # {
+          #   set -e
+          #   echo "Building client..."
+          #   cd client
+          #   echo "REACT_APP_API_URL=https://${{ secrets.TEST_HOST }}/api" > .env
+          #   npm install --force
+          #   npm run build
+          #   cd ..
+
+          #   echo "Building admin..."
+          #   cd admin
+          #   echo "VITE_API_BASE_URL=https://${{ secrets.TEST_HOST }}/api" > .env
+          #   npm install --force
+          #   npm run build
+          #   cd ..
+
+          #   echo "Cleaning old frontend..."
+          #   sudo rm -rf /var/www/html/*
+          #   sudo rm -rf /var/www/html/admin
+          #   sudo mkdir -p /var/www/html/admin
+
+          #   echo "Deploying new frontend..."
+          #   sudo cp -r client/build/. /var/www/html
+          #   sudo cp -r admin/dist/. /var/www/html/admin
+
+          #   echo "Setting up backend..."
+          #   cd server
+          #   npm install
+          #   pm2 startOrReload ecosystem.config.js --env development
+          #   pm2 save
+
+          #   echo "Deployment completed successfully."
+
+          # } || {
+          #   echo "Deployment failed. Rolling back..."
+
+          #   if [ -d "$BACKUP_DIR/html" ]; then
+          #     sudo rm -rf /var/www/html
+          #     sudo cp -r "$BACKUP_DIR/html" /var/www/html
+          #   fi
+
+          #   if [ -d "$BACKUP_DIR/admin" ]; then
+          #     sudo rm -rf /var/www/html/admin
+          #     sudo cp -r "$BACKUP_DIR/admin" /var/www/html/admin
+          #   fi
+
+          #   cd ~/HerdAIWeb1/server
+          #   pm2 startOrReload ecosystem.config.js --env development
+          #   pm2 save
+
+          #   echo "Rollback complete."
+          # }
+
+          set -e  # Fail immediately on errors
+  
+          TIMESTAMP=$(date +'%Y%m%d%H%M%S')
+          BACKUP_DIR="/var/www/backup_$TIMESTAMP"
+
+          rollback() {
+            echo "Deployment failed. Rolling back..."
+
+            if [ -d "$BACKUP_DIR/html" ]; then
+              sudo rm -rf /var/www/html
+              sudo cp -r "$BACKUP_DIR/html" /var/www/html
+            fi
+
+            if [ -d "$BACKUP_DIR/admin" ]; then
+              sudo rm -rf /var/www/html/admin
+              sudo cp -r "$BACKUP_DIR/admin" /var/www/html/admin
+            fi
+
+            cd ~/HerdAIWeb1/server
+            pm2 startOrReload ecosystem.config.js --env development
+            pm2 save
+
+            echo "Rollback complete."
+          }
+
+          trap rollback ERR
+
+          echo "Navigating to project directory..."
+          cd ~/HerdAIWeb1
+
+          echo "Stashing and pulling latest changes..."
+          git stash || true
+          git fetch origin
+          git checkout Test
+          git reset --hard origin/Test
+          git clean -fd
+
+          echo "Copying .env files..."
+          cp ~/herdAI-configs/client.env ./client/.env
+          cp ~/herdAI-configs/admin.env ./admin/.env
+          cp ~/herdAI-configs/server.env ./server/.env
+
+          echo "Backing up current deployment..."
+          sudo mkdir -p "$BACKUP_DIR"
+          sudo cp -r /var/www/html "$BACKUP_DIR/html"
+          sudo cp -r /var/www/html/admin "$BACKUP_DIR/admin"
+
+          echo "Cleaning up old backups..."
+          sudo ls -1dt /var/www/backup_* | tail -n +6 | tee /tmp/deleted_backups.log | sudo xargs rm -rf
+
+          echo "Building client..."
+          cd client
+          echo "REACT_APP_API_URL=https://${{ secrets.TEST_HOST }}/api" > .env
+          npm install --force
+          npm run build
+          cd ..
+
+          echo "Building admin..."
+          cd admin
+          echo "VITE_API_BASE_URL=https://${{ secrets.TEST_HOST }}/api" > .env
+          npm install --force
+          npm run build
+          cd ..
+
+          echo "Cleaning old frontend..."
+          sudo rm -rf /var/www/html/*
+          sudo rm -rf /var/www/html/admin
+          sudo mkdir -p /var/www/html/admin
+
+          echo "Deploying new frontend..."
+          sudo cp -r client/build/. /var/www/html
+          sudo cp -r admin/dist/. /var/www/html/admin
+
+          echo "Setting up backend..."
+          cd server
+          npm install
+          pm2 startOrReload ecosystem.config.js --env development
+          pm2 save
+
+          echo "Deployment completed successfully."
+

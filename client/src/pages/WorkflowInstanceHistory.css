@@ -1,0 +1,72 @@
+/* WorkflowInstanceHistory.css */
+
+.workflow-history-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.workflow-history-timeline {
+  position: relative;
+}
+
+.workflow-history-timeline::before {
+  content: '';
+  position: absolute;
+  left: 20px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: #e5e7eb;
+}
+
+.workflow-history-item {
+  position: relative;
+  padding-left: 60px;
+  margin-bottom: 2rem;
+}
+
+.workflow-history-item::before {
+  content: '';
+  position: absolute;
+  left: 12px;
+  top: 8px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #3b82f6;
+  border: 3px solid #ffffff;
+  box-shadow: 0 0 0 2px #e5e7eb;
+}
+
+.workflow-history-item.completed::before {
+  background-color: #10b981;
+}
+
+.workflow-history-item.failed::before {
+  background-color: #ef4444;
+}
+
+.workflow-history-item.pending::before {
+  background-color: #f59e0b;
+}
+
+.workflow-history-item.in-progress::before {
+  background-color: #3b82f6;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .workflow-history-timeline::before {
+    left: 15px;
+  }
+  
+  .workflow-history-item {
+    padding-left: 45px;
+  }
+  
+  .workflow-history-item::before {
+    left: 7px;
+    width: 14px;
+    height: 14px;
+  }
+}

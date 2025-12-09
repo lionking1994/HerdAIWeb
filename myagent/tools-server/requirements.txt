@@ -1,0 +1,9 @@
+fastapi==0.115.12
+uvicorn[standard]==0.34.3
+pydantic==2.11.5
+psycopg2-binary==2.9.10
+pinecone==7.0.2
+pinecone-client==6.0.0
+openai==1.82.1
+aiohttp==3.12.15
+simple-salesforce==1.12.6

@@ -1,0 +1,29 @@
+// This is a backup of the original TSX file
+// The content has been moved to .bak extension to avoid TypeScript compilation
+// Use InteractiveNodeGraph.jsx instead
+
+import React, { useCallback, useState, useRef, useEffect } from 'react';
+import ReactFlow, {
+  Node,
+  Edge,
+  addEdge,
+  Connection,
+  useNodesState,
+  useEdgesState,
+  Controls,
+  Background,
+  ReactFlowProvider,
+  useReactFlow,
+  ReactFlowInstance
+} from 'reactflow';
+// import dagre from 'dagre'; // Temporarily commented out to avoid TypeScript errors
+import html2canvas from 'html2canvas';
+import { Download, ZoomIn, ZoomOut, RotateCcw, Save } from 'lucide-react';
+
+import CustomNode from './CustomNode';
+import CustomEdge from './CustomEdge';
+import { GraphData, InteractiveNodeGraphProps, AnnotationState } from './graph';
+
+import 'reactflow/dist/style.css';
+
+// ... rest of the original TSX content ... 

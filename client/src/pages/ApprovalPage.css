@@ -1,0 +1,183 @@
+/* Approval Page Styles */
+.approval-page {
+  min-height: 100vh;
+  background-color: #f9fafb;
+}
+
+.approval-header {
+  background-color: #059669;
+  color: white;
+  padding: 0.5rem 1rem;
+}
+
+.approval-content {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.approval-tabs {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.approval-tab {
+  padding: 0.75rem 1.5rem;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.approval-tab.active {
+  background-color: #2563eb;
+  color: white;
+}
+
+.approval-tab.inactive {
+  background-color: white;
+  color: #374151;
+  border: 1px solid #bfdbfe;
+}
+
+.approval-tab.inactive:hover {
+  background-color: #f9fafb;
+}
+
+.approval-tab-content {
+  background-color: white;
+  border: 1px solid #bfdbfe;
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+}
+
+.approval-button {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  cursor: pointer;
+  border: 1px solid;
+}
+
+.approval-button.approve {
+  border-color: #2563eb;
+  color: #2563eb;
+  background-color: white;
+}
+
+.approval-button.approve:hover {
+  background-color: #eff6ff;
+}
+
+.approval-button.reject {
+  border-color: #dc2626;
+  color: #dc2626;
+  background-color: white;
+}
+
+.approval-button.reject:hover {
+  background-color: #fef2f2;
+}
+
+.approval-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.floating-action-button {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: 3rem;
+  height: 3rem;
+  background-color: #9333ea;
+  color: white;
+  border-radius: 50%;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.floating-action-button:hover {
+  background-color: #7c3aed;
+  transform: scale(1.05);
+}
+
+.workflow-timeline {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.timeline-dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  background-color: #2563eb;
+  border-radius: 50%;
+  margin-top: 0.5rem;
+  flex-shrink: 0;
+}
+
+.timeline-content {
+  flex: 1;
+}
+
+.timeline-title {
+  font-weight: 500;
+  color: #111827;
+}
+
+.timeline-date {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.company-details-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.company-detail-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+}
+
+.company-detail-label {
+  font-weight: 600;
+  color: #111827;
+}
+
+.company-detail-value {
+  color: #374151;
+}
+
+.insights-visualization {
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  text-align: center;
+  min-height: 16rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.insights-title {
+  color: #6b7280;
+  margin-bottom: 0.5rem;
+}
+
+.insights-description {
+  font-size: 0.875rem;
+  color: #9ca3af;
+} 
