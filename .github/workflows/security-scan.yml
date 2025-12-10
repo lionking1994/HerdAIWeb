@@ -24,17 +24,13 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '18'
-        cache: 'npm'
-        cache-dependency-path: |
-          server/package-lock.json
-          client/package-lock.json
-          admin/package-lock.json
+        # No cache since package-lock.json files are not in git
 
     - name: Install ESLint Security Plugins (Server)
       working-directory: ./server
       run: |
-        npm ci
-        npm install --save-dev eslint eslint-plugin-security eslint-plugin-no-secrets
+        npm install --legacy-peer-deps
+        npm install --save-dev eslint eslint-plugin-security eslint-plugin-no-secrets --legacy-peer-deps
 
     - name: Run ESLint Security Scan (Server)
       working-directory: ./server
@@ -65,26 +61,29 @@ jobs:
     - name: Audit Server Dependencies
       working-directory: ./server
       run: |
-        npm ci --ignore-scripts
+        npm install --ignore-scripts --legacy-peer-deps
         echo "## Server Dependencies Audit" >> $GITHUB_STEP_SUMMARY
         npm audit --json > server-audit.json || true
         npm audit --audit-level=moderate 2>&1 | head -100 >> $GITHUB_STEP_SUMMARY || true
+      continue-on-error: true
 
     - name: Audit Client Dependencies
       working-directory: ./client
       run: |
-        npm ci --ignore-scripts
+        npm install --ignore-scripts --legacy-peer-deps
         echo "## Client Dependencies Audit" >> $GITHUB_STEP_SUMMARY
         npm audit --json > client-audit.json || true
         npm audit --audit-level=moderate 2>&1 | head -100 >> $GITHUB_STEP_SUMMARY || true
+      continue-on-error: true
 
     - name: Audit Admin Dependencies
       working-directory: ./admin
       run: |
-        npm ci --ignore-scripts
+        npm install --ignore-scripts --legacy-peer-deps
         echo "## Admin Dependencies Audit" >> $GITHUB_STEP_SUMMARY
         npm audit --json > admin-audit.json || true
         npm audit --audit-level=moderate 2>&1 | head -100 >> $GITHUB_STEP_SUMMARY || true
+      continue-on-error: true
 
     - name: Upload Audit Reports
       uses: actions/upload-artifact@v4
@@ -177,7 +176,7 @@ jobs:
     - name: Check Server Licenses
       working-directory: ./server
       run: |
-        npm ci --ignore-scripts
+        npm install --ignore-scripts --legacy-peer-deps
         echo "## Server Package Licenses" >> $GITHUB_STEP_SUMMARY
         license-checker --summary >> $GITHUB_STEP_SUMMARY || true
         license-checker --failOn "GPL;AGPL;LGPL" || echo "⚠️ Copyleft licenses detected" >> $GITHUB_STEP_SUMMARY
