@@ -183,43 +183,34 @@ jobs:
         license-checker --failOn "GPL;AGPL;LGPL" || echo "⚠️ Copyleft licenses detected" >> $GITHUB_STEP_SUMMARY
       continue-on-error: true
 
-  # TruffleHog Secret Scanning - Pull Request Only
-  secret-scan-pr:
-    name: Secret Detection (TruffleHog PR)
+  # TruffleHog Secret Scanning
+  secret-scan:
+    name: Secret Detection (TruffleHog)
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
     
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
-        fetch-depth: 0
+        fetch-depth: 0  # Full history for scanning
 
-    - name: TruffleHog Secret Scan
+    # Only use the TruffleHog action on pull_request (avoids BASE==HEAD on push to main)
+    - name: TruffleHog Secret Scan (PR)
+      if: github.event_name == 'pull_request'
       uses: trufflesecurity/trufflehog@main
       with:
         extra_args: --only-verified
       continue-on-error: true
 
-  # TruffleHog Secret Scanning - Push/Manual (Filesystem scan)
-  secret-scan-push:
-    name: Secret Detection (TruffleHog Push)
-    runs-on: ubuntu-latest
-    if: github.event_name != 'pull_request'
-    
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-
-    - name: TruffleHog Filesystem Scan
+    # For push/manual events, use filesystem scan instead of git commit comparison
+    - name: TruffleHog Full Repo Scan (Push/Manual)
+      if: github.event_name != 'pull_request'
       run: |
         echo "## 🔍 Secret Scan Results" >> $GITHUB_STEP_SUMMARY
-        echo "Scanning repository for secrets..." >> $GITHUB_STEP_SUMMARY
-        docker run --rm -v "$PWD:/pwd" trufflesecurity/trufflehog:latest filesystem /pwd --only-verified 2>&1 | tee trufflehog-output.txt || true
-        if grep -q "Found verified result" trufflehog-output.txt 2>/dev/null; then
-          echo "⚠️ **Verified secrets detected!** Please review the scan output." >> $GITHUB_STEP_SUMMARY
+        echo "Running full repository scan..." >> $GITHUB_STEP_SUMMARY
+        docker run --rm -v "$PWD:/pwd" trufflesecurity/trufflehog:latest filesystem /pwd --only-verified 2>&1 | tee /tmp/trufflehog-output.txt || true
+        if grep -q "Found verified result" /tmp/trufflehog-output.txt 2>/dev/null; then
+          echo "⚠️ **Verified secrets detected!** Check workflow logs for details." >> $GITHUB_STEP_SUMMARY
         else
           echo "✅ No verified secrets found in the codebase." >> $GITHUB_STEP_SUMMARY
         fi
@@ -229,7 +220,7 @@ jobs:
   security-summary:
     name: Security Summary
     runs-on: ubuntu-latest
-    needs: [eslint-security, dependency-scan, owasp-check, license-check]
+    needs: [eslint-security, dependency-scan, owasp-check, license-check, secret-scan]
     if: always()
     
     steps:
