@@ -183,7 +183,9 @@ jobs:
         license-checker --failOn "GPL;AGPL;LGPL" || echo "⚠️ Copyleft licenses detected" >> $GITHUB_STEP_SUMMARY
       continue-on-error: true
 
-  # TruffleHog Secret Scanning
+  # TruffleHog Secret Scanning - Only on Pull Requests
+  # Note: TruffleHog git scanning doesn't work well on push events (BASE==HEAD issue)
+  # For push events, we use filesystem scanning instead
   secret-scan:
     name: Secret Detection (TruffleHog)
     runs-on: ubuntu-latest
@@ -194,20 +196,17 @@ jobs:
       with:
         fetch-depth: 0  # Full history for scanning
 
-    - name: TruffleHog Secret Scan
-      uses: trufflesecurity/trufflehog@main
-      with:
-        extra_args: --only-verified
-      # Only run on pull_request events to avoid BASE==HEAD issue on push
-      if: github.event_name == 'pull_request'
-      continue-on-error: true
-
-    - name: TruffleHog Full Repo Scan (Push/Manual)
-      if: github.event_name != 'pull_request'
+    - name: TruffleHog Filesystem Scan
       run: |
         echo "## 🔍 Secret Scan Results" >> $GITHUB_STEP_SUMMARY
-        echo "Running full repository scan..." >> $GITHUB_STEP_SUMMARY
-        docker run --rm -v "$PWD:/pwd" trufflesecurity/trufflehog:latest filesystem /pwd --only-verified --json 2>/dev/null | head -50 || echo "✅ No verified secrets found" >> $GITHUB_STEP_SUMMARY
+        echo "Scanning repository for secrets..." >> $GITHUB_STEP_SUMMARY
+        docker run --rm -v "$PWD:/pwd" trufflesecurity/trufflehog:latest filesystem /pwd --only-verified 2>&1 | tee trufflehog-output.txt || true
+        if grep -q "Found verified result" trufflehog-output.txt 2>/dev/null; then
+          echo "⚠️ **Verified secrets detected!** Please review the scan output." >> $GITHUB_STEP_SUMMARY
+          cat trufflehog-output.txt >> $GITHUB_STEP_SUMMARY
+        else
+          echo "✅ No verified secrets found in the codebase." >> $GITHUB_STEP_SUMMARY
+        fi
       continue-on-error: true
 
   # Security Summary
