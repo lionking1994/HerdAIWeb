@@ -183,18 +183,35 @@ jobs:
         license-checker --failOn "GPL;AGPL;LGPL" || echo "⚠️ Copyleft licenses detected" >> $GITHUB_STEP_SUMMARY
       continue-on-error: true
 
-  # TruffleHog Secret Scanning - Only on Pull Requests
-  # Note: TruffleHog git scanning doesn't work well on push events (BASE==HEAD issue)
-  # For push events, we use filesystem scanning instead
-  secret-scan:
-    name: Secret Detection (TruffleHog)
+  # TruffleHog Secret Scanning - Pull Request Only
+  secret-scan-pr:
+    name: Secret Detection (TruffleHog PR)
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
     
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
-        fetch-depth: 0  # Full history for scanning
+        fetch-depth: 0
+
+    - name: TruffleHog Secret Scan
+      uses: trufflesecurity/trufflehog@main
+      with:
+        extra_args: --only-verified
+      continue-on-error: true
+
+  # TruffleHog Secret Scanning - Push/Manual (Filesystem scan)
+  secret-scan-push:
+    name: Secret Detection (TruffleHog Push)
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request'
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
 
     - name: TruffleHog Filesystem Scan
       run: |
@@ -203,7 +220,6 @@ jobs:
         docker run --rm -v "$PWD:/pwd" trufflesecurity/trufflehog:latest filesystem /pwd --only-verified 2>&1 | tee trufflehog-output.txt || true
         if grep -q "Found verified result" trufflehog-output.txt 2>/dev/null; then
           echo "⚠️ **Verified secrets detected!** Please review the scan output." >> $GITHUB_STEP_SUMMARY
-          cat trufflehog-output.txt >> $GITHUB_STEP_SUMMARY
         else
           echo "✅ No verified secrets found in the codebase." >> $GITHUB_STEP_SUMMARY
         fi
@@ -213,7 +229,7 @@ jobs:
   security-summary:
     name: Security Summary
     runs-on: ubuntu-latest
-    needs: [eslint-security, dependency-scan, owasp-check, license-check, secret-scan]
+    needs: [eslint-security, dependency-scan, owasp-check, license-check]
     if: always()
     
     steps:
