@@ -1,0 +1,206 @@
+# Security Scanning Workflow
+# Runs comprehensive security checks on every push and pull request
+
+name: "Security Scan"
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master, develop ]
+  workflow_dispatch:
+
+jobs:
+  # ESLint Security Analysis
+  eslint-security:
+    name: ESLint Security Check
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: |
+          server/package-lock.json
+          client/package-lock.json
+          admin/package-lock.json
+
+    - name: Install ESLint Security Plugins (Server)
+      working-directory: ./server
+      run: |
+        npm ci
+        npm install --save-dev eslint eslint-plugin-security eslint-plugin-no-secrets
+
+    - name: Run ESLint Security Scan (Server)
+      working-directory: ./server
+      run: npx eslint . --ext .js --format json --output-file ../eslint-server-report.json || true
+      continue-on-error: true
+
+    - name: Upload ESLint Report
+      uses: actions/upload-artifact@v4
+      with:
+        name: eslint-security-report
+        path: eslint-server-report.json
+        retention-days: 30
+
+  # Dependency Vulnerability Scanning
+  dependency-scan:
+    name: Dependency Vulnerability Scan
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Audit Server Dependencies
+      working-directory: ./server
+      run: |
+        npm ci --ignore-scripts
+        echo "## Server Dependencies Audit" >> $GITHUB_STEP_SUMMARY
+        npm audit --json > server-audit.json || true
+        npm audit --audit-level=moderate 2>&1 | head -100 >> $GITHUB_STEP_SUMMARY || true
+
+    - name: Audit Client Dependencies
+      working-directory: ./client
+      run: |
+        npm ci --ignore-scripts
+        echo "## Client Dependencies Audit" >> $GITHUB_STEP_SUMMARY
+        npm audit --json > client-audit.json || true
+        npm audit --audit-level=moderate 2>&1 | head -100 >> $GITHUB_STEP_SUMMARY || true
+
+    - name: Audit Admin Dependencies
+      working-directory: ./admin
+      run: |
+        npm ci --ignore-scripts
+        echo "## Admin Dependencies Audit" >> $GITHUB_STEP_SUMMARY
+        npm audit --json > admin-audit.json || true
+        npm audit --audit-level=moderate 2>&1 | head -100 >> $GITHUB_STEP_SUMMARY || true
+
+    - name: Upload Audit Reports
+      uses: actions/upload-artifact@v4
+      with:
+        name: npm-audit-reports
+        path: |
+          server/server-audit.json
+          client/client-audit.json
+          admin/admin-audit.json
+        retention-days: 30
+
+  # Snyk Security Scan (Optional - requires SNYK_TOKEN secret)
+  snyk-scan:
+    name: Snyk Security Scan
+    runs-on: ubuntu-latest
+    if: ${{ vars.ENABLE_SNYK == 'true' }}
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Install Snyk CLI
+      run: npm install -g snyk
+
+    - name: Authenticate Snyk
+      run: snyk auth ${{ secrets.SNYK_TOKEN }}
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+    - name: Run Snyk Test (Server)
+      working-directory: ./server
+      run: snyk test --severity-threshold=high || true
+      continue-on-error: true
+
+    - name: Run Snyk Code (SAST)
+      run: snyk code test --severity-threshold=high || true
+      continue-on-error: true
+
+  # OWASP Dependency Check
+  owasp-check:
+    name: OWASP Dependency Check
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Run OWASP Dependency Check
+      uses: dependency-check/Dependency-Check_Action@main
+      with:
+        project: 'HerdAIWeb'
+        path: '.'
+        format: 'HTML'
+        args: >
+          --enableExperimental
+          --scan server/package.json
+          --scan client/package.json
+          --scan admin/package.json
+      continue-on-error: true
+
+    - name: Upload OWASP Report
+      uses: actions/upload-artifact@v4
+      with:
+        name: owasp-dependency-check-report
+        path: reports/
+        retention-days: 30
+
+  # License Compliance Check
+  license-check:
+    name: License Compliance
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Install license-checker
+      run: npm install -g license-checker
+
+    - name: Check Server Licenses
+      working-directory: ./server
+      run: |
+        npm ci --ignore-scripts
+        echo "## Server Package Licenses" >> $GITHUB_STEP_SUMMARY
+        license-checker --summary >> $GITHUB_STEP_SUMMARY || true
+        license-checker --failOn "GPL;AGPL;LGPL" || echo "⚠️ Copyleft licenses detected" >> $GITHUB_STEP_SUMMARY
+      continue-on-error: true
+
+  # Security Summary
+  security-summary:
+    name: Security Summary
+    runs-on: ubuntu-latest
+    needs: [eslint-security, dependency-scan, owasp-check, license-check]
+    if: always()
+    
+    steps:
+    - name: Generate Security Summary
+      run: |
+        echo "# 🔒 Security Scan Summary" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "| Check | Status |" >> $GITHUB_STEP_SUMMARY
+        echo "|-------|--------|" >> $GITHUB_STEP_SUMMARY
+        echo "| ESLint Security | ${{ needs.eslint-security.result }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| Dependency Scan | ${{ needs.dependency-scan.result }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| OWASP Check | ${{ needs.owasp-check.result }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| License Check | ${{ needs.license-check.result }} |" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "📊 Detailed reports are available in the workflow artifacts." >> $GITHUB_STEP_SUMMARY
+
